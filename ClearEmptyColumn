@@ -1,0 +1,17 @@
+function deleteEmptyColumnsFromRow2() {
+    var sheet = SpreadsheetApp.getActiveSpreadsheet().getActiveSheet();
+    var lastColumn = sheet.getLastColumn();
+    var lastRow = sheet.getLastRow();
+
+    // Loop through columns from right to left
+    for (var col = lastColumn; col >= 1; col--) {
+        var range = sheet.getRange(2, col, lastRow - 1, 1); // Data from Row 2 onward
+        var values = range.getValues().flat().filter(String); // Remove empty values
+        
+        if (values.length === 0) {
+            sheet.deleteColumn(col);
+        }
+    }
+
+    SpreadsheetApp.getUi().alert("Empty columns (excluding headers) have been deleted.");
+}
